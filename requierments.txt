@@ -2,3 +2,5 @@ flask
 python-dotenv
 Flask_SQLAlchemy
 psycopg2-binary
+pandas
+numpy

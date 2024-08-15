@@ -5,7 +5,8 @@ import os
 import psycopg2
 from dotenv import load_dotenv
 from psycopg2.extras import RealDictCursor
-
+import pandas as pd
+import numpy as np
 load_dotenv()
 app = Flask(__name__)
 def get_db_connection():
@@ -107,6 +108,24 @@ def list_oppertunities():
     cursor.close()
     conn.close()
     return (oppertunities)
+ 
+students_recfetch = list_students()
+opportunities_recfetch = list_oppertunities()
+
+student_df = pd.DataFrame(students_recfetch)
+opportunities_df = pd.DataFrame(opportunities_recfetch)
+
+@app.route('/getdataframes')
+def getstudentdfetch():
+    pandas_student_dataframe = student_df
+    pandas_oppetunity_dataframe = opportunities_df
+    print(pandas_student_dataframe)
+    print(pandas_oppetunity_dataframe)
+    return "pandas dataframe tester"
+    
+
+    ##
 
 if __name__ == "__main__":
     app.run(debug=True)
+
