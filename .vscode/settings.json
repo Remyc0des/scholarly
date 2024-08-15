@@ -1,0 +1,25 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "name": "scholarly",
+            "database": "postgres",
+            "username": "scholarly"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "database": "postgres",
+            "name": "scholar",
+            "username": "student",
+            "password": ""
+        }
+    ],
+    "python.analysis.typeCheckingMode": "off"
+}
