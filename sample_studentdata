@@ -1,0 +1,101 @@
+ 
+ [
+    {
+        "birthday": "Wed, 15 Jun 2005 00:00:00 GMT",
+        "creeated_at": "Thu, 27 Jun 2024 04:59:29 GMT",
+        "email": "john.do2@example.com",
+        "gender": "male",
+        "gpa": null,
+        "grade": "junior",
+        "income": "middle",
+        "intended_major": "MASS MEDIA",
+        "interest": null,
+        "name": "Johnny Doe",
+        "phone": "123-456-7840",
+        "race": "white",
+        "student_id": 5
+    },
+    {
+        "birthday": "Wed, 15 Jun 2005 00:00:00 GMT",
+        "creeated_at": "Thu, 27 Jun 2024 05:35:35 GMT",
+        "email": "john.doe3@example.com",
+        "gender": "male",
+        "gpa": null,
+        "grade": "junior",
+        "income": "middle",
+        "intended_major": "COMPUTER SCIENCE",
+        "interest": null,
+        "name": "Johnaton Doe",
+        "phone": "123-457-7890",
+        "race": "white",
+        "student_id": 6
+    },
+    {
+        "birthday": "Wed, 15 Jun 2005 00:00:00 GMT",
+        "creeated_at": "Thu, 27 Jun 2024 11:41:01 GMT",
+        "email": "algo@rithim.com",
+        "gender": "male",
+        "gpa": 3,
+        "grade": "junior",
+        "income": "middle",
+        "intended_major": "BIOLOGY",
+        "interest": [
+            "science",
+            "research"
+        ],
+        "name": "algo rithim",
+        "phone": "123-456-9901",
+        "race": "black",
+        "student_id": 7
+    },
+    {
+        "birthday": "Mon, 15 May 2006 00:00:00 GMT",
+        "creeated_at": "Thu, 27 Jun 2024 01:25:15 GMT",
+        "email": "jane.doe@example.com",
+        "gender": "female",
+        "gpa": null,
+        "grade": "junior",
+        "income": "middle",
+        "intended_major": "COMPUTER SCIENCE",
+        "interest": [
+            "science",
+            "computers",
+            "technology",
+            "STEM",
+            "coding",
+            "programing",
+            "diversity",
+            "students of color"
+        ],
+        "name": "Jane Doe",
+        "phone": "123-456-7890",
+        "race": "hispanic",
+        "student_id": 1
+    },
+    {
+        "birthday": "Tue, 06 Nov 2007 00:00:00 GMT",
+        "creeated_at": "Thu, 15 Aug 2024 19:48:45 GMT",
+        "email": "jjdoe1@example.com",
+        "gender": "male",
+        "gpa": null,
+        "grade": "sophmore",
+        "income": "low",
+        "intended_major": "COMPUTER SCIENCE",
+        "interest": [
+            "science",
+            "computers",
+            "technology",
+            "STEM",
+            "coding",
+            "programing",
+            "diversity",
+            "students of color",
+            "male identifying"
+        ],
+        "name": "Jeramaih Doe",
+        "phone": "686 582-7187",
+        "race": "black",
+        "student_id": 8
+    }
+]
+

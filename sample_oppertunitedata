@@ -1,0 +1,85 @@
+[
+  {
+    "deadline": "Thu, 12 Dec 2024 00:00:00 GMT",
+    "description": "summer Shakespeare is a five-week summer intensive that is free for qualifying students. Twenty-two students are selected to train five days a week in voice, movement, ensemble work and scene study (50 hours of classes total). The program culminates in a production of an abbreviated Shakespeare play. Summer Shakespeare is an intensive program that requires the quick understanding and execution of new skills. ",
+    "eligibility": "NYC residents, must demonstrate financial need, need for arts exposure ",
+    "institution": "Stella Adler",
+    "match_score": null,
+    "opp_type": "unpaid",
+    "oppertunity_id": 5,
+    "tags": [
+      "art",
+      "low income",
+      "financial need",
+      "acting",
+      "junior",
+      "senior",
+      "freshman",
+      "sophmore",
+      "drama",
+      "theatere"
+    ],
+    "title": "Stella Adler Summer Acting Program "
+  },
+  {
+    "deadline": "Sat, 21 Sep 2024 00:00:00 GMT",
+    "description": "Adolescents Caring for COMmunity by Promoting Literacy on Insurance, Stroke, Health Education, Emergencies, and Dementia (ACComPLISHED) is a free, 3-month community health training program designed to encourage students to learn health topics and gain skills to improve community health literacy. The program is an excellent option for students contemplating a career in health or academia who want to make an impact in their community.",
+    "eligibility": "Rising sophmores, juniors, seniors",
+    "institution": "Columbia University",
+    "match_score": null,
+    "opp_type": "research",
+    "oppertunity_id": 4,
+    "tags": [
+      "STEM",
+      "reasearch",
+      "inclusive",
+      "free",
+      "BIOLOGY",
+      "health",
+      "medicine"
+    ],
+    "title": "Columbia University Accomplished Program "
+  },
+  {
+    "deadline": "Mon, 30 Dec 2024 00:00:00 GMT",
+    "description": "All Star Codes 6-week Summer Intensive gives participants the equivalent of one year's worth of college-level computer science education. Dedicated to giving young men of color financial independence and social mobility through code",
+    "eligibility": "Male identifying, Students of color, highschool age",
+    "institution": "AllStarCode",
+    "match_score": null,
+    "opp_type": "unpaid",
+    "oppertunity_id": 6,
+    "tags": [
+      "STEM",
+      "tech",
+      "Science",
+      "students of color",
+      "diversity",
+      "coding",
+      "COMPUTER SCIENCE",
+      "program",
+      "Male identifying"
+    ],
+    "title": "All Star Code Summer Intensive"
+  },
+  {
+    "deadline": "Fri, 05 Jul 2024 00:00:00 GMT",
+    "description": "A program designed to increase the participation rate of historically underrepresented and economically disadvantaged students in mathematics, science, technology, and health related fields. BMCC STEP provides NYC students in the 7th through 12th grades with a range of academic enrichment courses, research experience, and special programs in science, mathematics, and technology content areas. ",
+    "eligibility": "All Highschool students",
+    "institution": "BMCC",
+    "match_score": null,
+    "opp_type": "college_prep",
+    "oppertunity_id": 3,
+    "tags": [
+      "STEM",
+      "Tech",
+      "Science",
+      "Low-income",
+      "students of color",
+      "freshman",
+      "sophmore",
+      "junior",
+      "senior"
+    ],
+    "title": "BMCC Science Technology Entry Program"
+  }
+]
