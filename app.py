@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from psycopg2.extras import RealDictCursor
 import pandas as pd
 import numpy as np
+import bcrypt
 load_dotenv()
 app = Flask(__name__)
 def get_db_connection():
@@ -28,13 +29,18 @@ def home():
 @app.route('/students', methods=['POST'])
 def create_student():
     data = request.json
+
+    #password hasing
+    password = data['password']
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        INSERT INTO students (name, email, phone, grade, race, birthday, gender, income, intended_major)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+        INSERT INTO students (name, email, phone, grade, race, birthday, gender, income, intended_major, interest, hashed_password)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING student_id
-    """, (data['name'], data['email'], data['phone'], data['grade'], data['race'], data['birthday'], data['gender'], data['income'], data['intended_major'],data['interest']))
+    """, (data['name'], data['email'], data['phone'], data['grade'], data['race'], data['birthday'], data['gender'], data['income'], data['intended_major'],data['interest'],hashed_password))
     student_id = cursor.fetchone()['student_id']
     conn.commit()
     cursor.close()
