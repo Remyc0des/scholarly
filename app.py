@@ -108,23 +108,68 @@ def list_oppertunities():
     cursor.close()
     conn.close()
     return (oppertunities)
- 
+
+##pandas dataframing
 students_recfetch = list_students()
 opportunities_recfetch = list_oppertunities()
 
-student_df = pd.DataFrame(students_recfetch)
+
+students_df = pd.DataFrame(students_recfetch)
 opportunities_df = pd.DataFrame(opportunities_recfetch)
 
+students_df.set_index('student_id', inplace=True)
+opportunities_df.set_index('oppertunity_id', inplace=True)
 @app.route('/getdataframes')
 def getstudentdfetch():
-    pandas_student_dataframe = student_df
-    pandas_oppetunity_dataframe = opportunities_df
-    print(pandas_student_dataframe)
-    print(pandas_oppetunity_dataframe)
+    print(students_df)
+    print(opportunities_df['match_score'])
     return "pandas dataframe tester"
-    
 
-    ##
+ #get dataframe info for a specific student   
+@app.route('/getdataframes/<int:student_id>')
+def df_findstudent(student_id):
+    found_student = students_df.loc[students_df.index == student_id]
+    print(found_student)
+    return "finding student"
+
+
+    
+    
+    ## recomendation system 
+def df_findstudent(student_id):
+    found_student = students_df.loc[students_df.index == student_id]
+    print(found_student)
+    return found_student
+
+def calculate_matching(student_interest, student_grade, student_intended_major, opprtunity_tags):
+    score = 0 
+
+    for tag in opprtunity_tags:
+        if tag in student_interest:
+            score += 2
+        if tag in student_grade:
+            score += 1
+        if tag in student_intended_major:
+            score += 3
+    
+    return score
+@app.route('/recomender/<int:student_id>')
+def createRecomendations(student_id):
+    recstudent = students_df.loc[students_df.index == student_id].iloc[0]
+        
+    student_interest = recstudent['interest']
+    student_grade = recstudent['grade']
+    student_intended_major = recstudent['intended_major']
+    
+    match_scores = []
+    for ind, row in opportunities_df.iterrows():
+        opprtunity_tags = row['tags']
+        match_score = calculate_matching(student_interest, student_grade,student_intended_major,opprtunity_tags)
+        opportunities_df.at[ind, 'match_score'] = match_score
+        match_scores.append({'opportunity': row['title'], 'match_score': match_score})
+        
+    print(match_scores) 
+    return {'recommendations': match_scores}
 
 if __name__ == "__main__":
     app.run(debug=True)
