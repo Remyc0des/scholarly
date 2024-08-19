@@ -177,6 +177,30 @@ def createRecomendations(student_id):
     print(match_scores) 
     return {'recommendations': match_scores}
 
+
+## fetch majors
+@app.route('/majors',methods=['GET'])
+def list_Majors():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM majors')
+    majors = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return(majors)
+
+## fetch interest 
+@app.route('/interest',methods=['GET'])
+def list_Interest():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM interestlist')
+    interest = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return(interest)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
 

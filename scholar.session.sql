@@ -1,2 +1,1 @@
-ALTER TABLE students 
-add username text;
+SELECT * FROM interest
