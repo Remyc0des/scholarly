@@ -32,15 +32,15 @@ def create_student():
 
     #password hasing
     password = data['password']
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    
+    bad_hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    password_hash = bad_hashed_password.decode('utf8') ## was having this problem https://stackoverflow.com/questions/34548846/flask-bcrypt-valueerror-invalid-salt idk why the comment i found the answer in used self. that doesnt make any sense to me but other than that the solution works fine
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
         INSERT INTO students (name, email, phone, grade, race, birthday, gender, income, intended_major, interest, hashed_password)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING student_id
-    """, (data['name'], data['email'], data['phone'], data['grade'], data['race'], data['birthday'], data['gender'], data['income'], data['intended_major'],data['interest'],hashed_password))
+    """, (data['name'], data['email'], data['phone'], data['grade'], data['race'], data['birthday'], data['gender'], data['income'], data['intended_major'],data['interest'], password_hash))
     student_id = cursor.fetchone()['student_id']
     conn.commit()
     cursor.close()
@@ -199,6 +199,31 @@ def list_Interest():
     cursor.close()
     conn.close()
     return(interest)
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.json
+    email = data['email']
+    password = data['password']
+    
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # Fetch the student record based on the email
+    cursor.execute('SELECT * FROM students WHERE email = %s', (email,))
+    student = cursor.fetchone()
+    
+    cursor.close()
+    conn.close()
+    
+    if student is None:
+        return {'error': 'Invalid email or password'}, 401
+    
+    # Verify the password
+    if bcrypt.checkpw(password.encode('utf-8'), student['hashed_password'].encode('utf-8')):
+        return {'message': 'Login successful', 'student_id': student['student_id']}, 200
+    else:
+        return {'error': 'Invalid email or password'}, 401
 
 
 if __name__ == "__main__":
