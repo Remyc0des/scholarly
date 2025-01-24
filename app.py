@@ -19,10 +19,32 @@ def get_db_connection():
     )
     return conn
 
+
+def get_students_df():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM students')
+    students = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    print(students)
+    return pd.DataFrame(students)
+    
+def get_opportunities_df():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM oppertunities')
+    opportunites = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return pd.DataFrame(opportunites)
+
+
    
 @app.get("/")
 def home():
     return "fuck the world"
+
 
 
 ##studen enpoits 
@@ -37,10 +59,10 @@ def create_student():
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        INSERT INTO students (name, email, phone, grade, race, birthday, gender, income, intended_major, interest, hashed_password)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        INSERT INTO students (name, email, phone, grade, race, birthday, gender, intended_major, interest, hashed_password)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING student_id
-    """, (data['name'], data['email'], data['phone'], data['grade'], data['race'], data['birthday'], data['gender'], data['income'], data['intended_major'],data['interest'], password_hash))
+    """, (data['name'], data['email'], data['phone'], data['grade'], data['race'], data['birthday'], data['gender'], data['intended_major'],data['interest'], password_hash))
     student_id = cursor.fetchone()['student_id']
     conn.commit()
     cursor.close()
@@ -147,35 +169,52 @@ def df_findstudent(student_id):
     print(found_student)
     return found_student
 
-def calculate_matching(student_interest, student_grade, student_intended_major, opprtunity_tags):
+def calculate_matching(student_interest, student_grade, student_intended_major, opportunity_tags):
     score = 0 
-
-    for tag in opprtunity_tags:
+    max_score_per_tag = 6
+    max_possible_score = max_score_per_tag * len(opportunity_tags) if opportunity_tags else 1
+    for tag in opportunity_tags:
         if tag in student_interest:
             score += 2
         if tag in student_grade:
             score += 1
         if tag in student_intended_major:
             score += 3
-    
-    return score
+    factored_score = (score / max_score_per_tag) * 100
+    return factored_score
+
+
 @app.route('/recomender/<int:student_id>')
 def createRecomendations(student_id):
+    # Dynamically fetch the latest student data from the database
+    students_df = get_students_df()
+    opportunities_df = get_opportunities_df()
+
+    # Ensure the student exists in the dataframe
+    if student_id not in students_df.index:
+        return {'error': 'Student not found'}, 404
+    
+    # Get the student's information
     recstudent = students_df.loc[students_df.index == student_id].iloc[0]
         
     student_interest = recstudent['interest']
     student_grade = recstudent['grade']
     student_intended_major = recstudent['intended_major']
     
-    match_scores = []
+    recomendations = []
     for ind, row in opportunities_df.iterrows():
-        opprtunity_tags = row['tags']
-        match_score = calculate_matching(student_interest, student_grade,student_intended_major,opprtunity_tags)
-        opportunities_df.at[ind, 'match_score'] = match_score
-        match_scores.append({'opportunity': row['title'], 'match_score': match_score})
+        opportunity_tags = row['tags']
+        match_score = calculate_matching(student_interest, student_grade, student_intended_major, opportunity_tags)
         
-    print(match_scores) 
-    return {'recommendations': match_scores}
+        # Update the DataFrame with the match score
+        opportunities_df.at[ind, 'match_score'] = match_score
+        if match_score >= 80:
+            recomendations.append({'opportunity': row['title'], 'match_score': match_score})
+        
+    print(student_interest)
+    print(recomendations) 
+    return {'recommendations': recomendations}
+
 
 
 ## fetch majors
@@ -227,5 +266,5 @@ def login():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run( debug=True)
 
