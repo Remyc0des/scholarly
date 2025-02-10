@@ -1,5 +1,6 @@
 
 from flask import Flask, request
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import os 
 import psycopg2
@@ -10,6 +11,7 @@ import numpy as np
 import bcrypt
 load_dotenv()
 app = Flask(__name__)
+CORS(app)
 def get_db_connection():
     conn = psycopg2.connect(
         dbname='postgres',
@@ -20,6 +22,7 @@ def get_db_connection():
     return conn
 
 
+
 def get_students_df():
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -27,8 +30,11 @@ def get_students_df():
     students = cursor.fetchall()
     cursor.close()
     conn.close()
-    print(students)
-    return pd.DataFrame(students)
+    df = pd.DataFrame(students)
+    if not df.empty:
+        df.set_index('student_id', inplace=True)
+    return df
+    
     
 def get_opportunities_df():
     conn = get_db_connection()
@@ -48,16 +54,23 @@ def home():
 
 
 ##studen enpoits 
+
+## create new student/sign up 
 @app.route('/students', methods=['POST'])
 def create_student():
     data = request.json
-
     #password hasing
     password = data['password']
     bad_hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
     password_hash = bad_hashed_password.decode('utf8') ## was having this problem https://stackoverflow.com/questions/34548846/flask-bcrypt-valueerror-invalid-salt idk why the comment i found the answer in used self. that doesnt make any sense to me but other than that the solution works fine
     conn = get_db_connection()
     cursor = conn.cursor()
+    cursor.execute("SELECT catagory FROM majors WHERE major = %s", (data['intended_major'],))
+    major_catagory_result = cursor.fetchone()
+    if major_catagory_result:
+        major_catagory = major_catagory_result['catagory']
+    else:
+        return {'error': 'Invalid major'}, 400
     cursor.execute("""
         INSERT INTO students (name, email, phone, grade, race, birthday, gender, intended_major, interest, hashed_password)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -200,6 +213,8 @@ def createRecomendations(student_id):
     student_interest = recstudent['interest']
     student_grade = recstudent['grade']
     student_intended_major = recstudent['intended_major']
+
+    print("student data:", recstudent)   
     
     recomendations = []
     for ind, row in opportunities_df.iterrows():
@@ -211,6 +226,7 @@ def createRecomendations(student_id):
         if match_score >= 80:
             recomendations.append({'opportunity': row['title'], 'match_score': match_score})
         
+     
     print(student_interest)
     print(recomendations) 
     return {'recommendations': recomendations}
@@ -264,7 +280,19 @@ def login():
     else:
         return {'error': 'Invalid email or password'}, 401
 
+## for clawgame 
+    ## pull random oppurtunity 
 
+@app.route('/random_oppertunity', methods=['GET'])
+def random_oppertunity():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM oppertunities ORDER BY RANDOM() LIMIT 1')
+    random_oppertunity = cursor.fetchone()
+    print("drawn oppertunity:",random_oppertunity)
+    return(random_oppertunity)
+    cursor.close()
+    conn.close()
 if __name__ == "__main__":
     app.run( debug=True)
 
