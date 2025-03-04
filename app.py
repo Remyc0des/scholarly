@@ -184,6 +184,11 @@ def df_findstudent(student_id):
     return found_student
 
 def calculate_matching(student_interest, student_grade, student_intended_major, opportunity_tags):
+    ## validation check
+    if not student_interest or not opportunity_tags:
+        print("debug - student_interest:", student_interest)
+        print("debug - opportunity_tags:", opportunity_tags)
+        return 0
     score = 0 
     max_score_per_tag = 6
     max_possible_score = max_score_per_tag * len(opportunity_tags) if opportunity_tags else 1
@@ -202,7 +207,9 @@ def calculate_matching(student_interest, student_grade, student_intended_major, 
 def createRecomendations(student_id):
     # Dynamically fetch the latest student data from the database
     students_df = get_students_df()
+    print("Debug - student dataframe:", students_df.columns)
     opportunities_df = get_opportunities_df()
+    print("Debug - opportunities dataframe:", opportunities_df.columns)
 
     # Ensure the student exists in the dataframe
     if student_id not in students_df.index:
@@ -210,6 +217,7 @@ def createRecomendations(student_id):
     
     # Get the student's information
     recstudent = students_df.loc[students_df.index == student_id].iloc[0]
+    print("Debug - student data:", recstudent)
         
     student_interest = recstudent['interest']
     student_grade = recstudent['grade']
