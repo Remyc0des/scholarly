@@ -15,8 +15,9 @@ CORS(app)
 def get_db_connection():
     conn = psycopg2.connect(
         dbname='postgres',
-        user='student',
-        host='localhost',
+        user='postgres',
+        password='postgres',
+        host='192.168.1.79',
         cursor_factory=RealDictCursor
     )
     return conn
