@@ -1,8 +1,8 @@
-flask 
-python-dotenv
-Flask_SQLAlchemy
-psycopg2-binary
+Flask
+gunicorn
+flask-cors
 pandas
 numpy
-gunicorn
 bcrypt
+psycopg2-binary
+python-dotenv
