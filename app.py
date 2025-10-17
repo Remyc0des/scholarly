@@ -16,7 +16,7 @@ CORS(app)
 # old host adress = 192.168.1.81
 
 def get_db_connection():
-    database_url = os.getenv('DATABASE_URL')
+    database_url = "postgresql://remonec:rl5yBafX0qssUs2S9yWUXlhz8OxXyuKx@dpg-d3j2ogbe5dus739gms20-a.ohio-postgres.render.com/aligned"
     result = urlparse(database_url)
     conn = psycopg2.connect(
         dbname=result.path[1:],
