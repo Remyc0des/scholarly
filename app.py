@@ -1,7 +1,7 @@
 
 from urllib.parse import urlparse
 from flask import Flask, request
-from flask-cors import CORS
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import os
 import psycopg2
