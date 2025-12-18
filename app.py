@@ -44,7 +44,7 @@ def get_students_df():
 def get_opportunities_df():
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM oppertunities')
+    cursor.execute('SELECT * FROM opportunities')
     opportunites = cursor.fetchall()
     cursor.close()
     conn.close()
