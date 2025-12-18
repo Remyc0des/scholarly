@@ -170,18 +170,17 @@ def list_oppertunities():
 
 
 
-
 @app.route('/getdataframes')
-
-students_recfetch = list_students()
-opportunities_recfetch = list_oppertunities()
-
-students_df = pd.DataFrame(students_recfetch)
-opportunities_df = pd.DataFrame(opportunities_recfetch)
-
-students_df.set_index('student_id', inplace=True)
-opportunities_df.set_index('opportunity_id', inplace=True)
 def getstudentdfetch():
+    
+    students_recfetch = list_students()
+    opportunities_recfetch = list_oppertunities()
+
+    students_df = pd.DataFrame(students_recfetch)
+    opportunities_df = pd.DataFrame(opportunities_recfetch)
+
+    students_df.set_index('student_id', inplace=True)
+    opportunities_df.set_index('opportunity_id', inplace=True)
     print(students_df)
     print(opportunities_df['match_score'])
     return "pandas dataframe tester"
@@ -195,6 +194,15 @@ def getstudentdfetch():
 
 
 def df_findstudent(student_id):
+    
+    students_recfetch = list_students()
+#opportunities_recfetch = list_oppertunities()
+
+    students_df = pd.DataFrame(students_recfetch)
+#opportunities_df = pd.DataFrame(opportunities_recfetch)
+
+    students_df.set_index('student_id', inplace=True)
+#opportunities_df.set_index('opportunity_id', inplace=True)
     found_student = students_df.loc[students_df.index == student_id]
     print(found_student)
     return found_student
