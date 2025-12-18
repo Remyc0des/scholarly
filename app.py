@@ -79,7 +79,7 @@ def create_student():
         return {'error': 'Invalid major'}, 400
     cursor.execute("""
         INSERT INTO students (name, email, phone, grade, race, birthdate, gender, intended_major, hashed_password)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING student_id
     """, (data['name'], data['email'], data['phone'], data['grade'], data['race'], data['birthdate'], data['gender'], data['intended_major'], password_hash))
 
