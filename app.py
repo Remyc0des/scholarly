@@ -74,7 +74,7 @@ def create_student():
                    (data['intended_major'],))
     major_catagory_result = cursor.fetchone()
     if major_catagory_result:
-        major_catagory = major_catagory_result['catagory']
+        major_catagory = major_catagory_result['major_catagory']
     else:
         return {'error': 'Invalid major'}, 400
     cursor.execute("""
