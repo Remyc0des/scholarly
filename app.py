@@ -149,7 +149,7 @@ def get_opportunity(oppertunity_id):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(
-        'SELECT * FROM oppertunities WHERE oppertunity_id = %s', (oppertunity_id,))
+        'SELECT * FROM opportunities WHERE opportunity_id = %s', (oppertunity_id,))
     opportunity = cursor.fetchone()
     cursor.close()
     conn.close()
@@ -162,7 +162,7 @@ def get_opportunity(oppertunity_id):
 def list_oppertunities():
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM oppertunities')
+    cursor.execute('SELECT * FROM opportunities')
     oppertunities = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -178,7 +178,7 @@ students_df = pd.DataFrame(students_recfetch)
 opportunities_df = pd.DataFrame(opportunities_recfetch)
 
 students_df.set_index('student_id', inplace=True)
-opportunities_df.set_index('oppertunity_id', inplace=True)
+opportunities_df.set_index('opportunity_id', inplace=True)
 
 
 @app.route('/getdataframes')
@@ -322,7 +322,7 @@ def login():
 def handle_student_swipe():
     data = request.json
     student_id = data['student_id']
-    oppertunity_id = data['oppertunity_id']
+    oppertunity_id = data['opportunity_id']
     swipe_type = data['swipe_type']
 
     if swipe_type not in ["saved", "disliked"]:
@@ -331,7 +331,7 @@ def handle_student_swipe():
     cur = conn.cursor()
     
     cur.execute("""
-        INSERT INTO student_swipes (student_id, oppertunity_id, swipe_type)
+        INSERT INTO student_swipes (student_id, opportunity_id, swipe_type)
         VALUES (%s, %s, %s)
         """, (student_id, oppertunity_id, swipe_type))
     conn.commit()
@@ -344,8 +344,8 @@ def get_saved_opportunities(student_id):
     cur = conn.cursor()
     cur.execute(""" 
         SELECT o.*
-        FROM oppertunities o
-        JOIN student_swipes s ON s.oppertunity_id = o.oppertunity_id
+        FROM opportunities o
+        JOIN student_swipes s ON s.opportunity_id = o.opportunity_id
         WHERE s.student_id = %s and s.swipe_type = 'saved'
     
     """, (student_id,))
@@ -362,13 +362,13 @@ def get_saved_opportunities(student_id):
 def is_opportunity_saved():
     data = request.json
     student_id = data.get('student_id')
-    oppertunity_id = data.get('oppertunity_id')
+    oppertunity_id = data.get('opportunity_id')
 
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute("""
         SELECT 1 FROM student_swipes
-        WHERE student_id = %s AND oppertunity_id = %s AND swipe_type = 'saved'
+        WHERE student_id = %s AND opportunity_id = %s AND swipe_type = 'saved'
         LIMIT 1
     """, (student_id, oppertunity_id))
     result = cur.fetchone()
@@ -382,7 +382,7 @@ def is_opportunity_saved():
 def random_oppertunity():
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM oppertunities ORDER BY RANDOM() LIMIT 1')
+    cursor.execute('SELECT * FROM opportunities ORDER BY RANDOM() LIMIT 1')
     random_oppertunity = cursor.fetchone()
     print("drawn oppertunity:", random_oppertunity)
     cursor.close()
