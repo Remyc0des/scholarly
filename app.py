@@ -16,7 +16,7 @@ CORS(app)
 # old host adress = 192.168.1.81
 
 def get_db_connection():
-    database_url = "postgresql://remonec:rl5yBafX0qssUs2S9yWUXlhz8OxXyuKx@dpg-d3j2ogbe5dus739gms20-a.ohio-postgres.render.com/aligned"
+    database_url = "postgresql://neondb_owner:npg_HoEkftn6s1YF@ep-lucky-sun-ad0wuzh7-pooler.c-2.us-east-1.aws.neon.tech/ALEDUdb1?sslmode=require&channel_binding=require"
     result = urlparse(database_url)
     conn = psycopg2.connect(
         dbname=result.path[1:],
