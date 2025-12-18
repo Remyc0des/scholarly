@@ -1,4 +1,3 @@
-
 from urllib.parse import urlparse
 from flask import Flask, request
 from flask_cors import CORS
