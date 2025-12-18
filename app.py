@@ -56,7 +56,7 @@ def home():
     return "fuck the world"
 
 
-# studen enpoits
+# student enpoits
 
 # create new student/sign up
 @app.route('/students', methods=['POST'])
@@ -78,10 +78,11 @@ def create_student():
     else:
         return {'error': 'Invalid major'}, 400
     cursor.execute("""
-        INSERT INTO students (name, email, phone, grade, race, birthday, gender, intended_major, interest, hashed_password)
+        INSERT INTO students (name, email, phone, grade, race, birthdate, gender, intended_major, hashed_password)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING student_id
-    """, (data['name'], data['email'], data['phone'], data['grade'], data['race'], data['birthday'], data['gender'], data['intended_major'], data['interest'], password_hash))
+    """, (data['name'], data['email'], data['phone'], data['grade'], data['race'], data['birthdate'], data['gender'], data['intended_major'], password_hash))
+
     student_id = cursor.fetchone()['student_id']
     conn.commit()
     cursor.close()
@@ -190,10 +191,6 @@ def getstudentdfetch():
 
 
 @app.route('/getdataframes/<int:student_id>')
-def df_findstudent(student_id):
-    found_student = students_df.loc[students_df.index == student_id]
-    print(found_student)
-    return "finding student"
 
     # recomendation system
 
