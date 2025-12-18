@@ -169,19 +169,18 @@ def list_oppertunities():
     return (oppertunities)
 
 
-# pandas dataframing
+
+
+@app.route('/getdataframes')
+
 students_recfetch = list_students()
 opportunities_recfetch = list_oppertunities()
-
 
 students_df = pd.DataFrame(students_recfetch)
 opportunities_df = pd.DataFrame(opportunities_recfetch)
 
 students_df.set_index('student_id', inplace=True)
 opportunities_df.set_index('opportunity_id', inplace=True)
-
-
-@app.route('/getdataframes')
 def getstudentdfetch():
     print(students_df)
     print(opportunities_df['match_score'])
