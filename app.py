@@ -70,7 +70,7 @@ def create_student():
     password_hash = bad_hashed_password.decode('utf8')
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT catagory FROM majors WHERE major = %s",
+    cursor.execute("SELECT major_catagory FROM majors WHERE major_title = %s",
                    (data['intended_major'],))
     major_catagory_result = cursor.fetchone()
     if major_catagory_result:
@@ -87,7 +87,7 @@ def create_student():
     conn.commit()
     cursor.close()
     conn.close()
-    return ({'student_id': student_id}), 201
+    return ({'student_id': str(student_id)}), 201
 
 
 @app.route('/students/<int:student_id>', methods=['GET'])
