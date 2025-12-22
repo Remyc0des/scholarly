@@ -11,3 +11,5 @@ fastapi
 httpx
 requests
 sqlmodel
+pydantic
+pydantic[email]
