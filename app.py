@@ -1,24 +1,14 @@
-from typing import Annotated
+
 from urllib.parse import urlparse
 from fastapi import FastAPI, HTTPException, Query, Depends
-import os
-from psycopg2.sql import SQL
-from pydantic import BaseModel, EmailStr, Field
 from datetime import date, datetime
-from typing import Optional
-from enum import Enum
 import psycopg2
 from dotenv import load_dotenv
 from psycopg2.extras import RealDictCursor
-import pandas as pd
-import numpy as np
 from fastapi.testclient import TestClient
 import bcrypt
 from uuid import UUID
 import random
-import requests
-import json
-from sqlmodel import Field, Session, SQLModel, create_engine, select
 from classes import GradeEnum, IncomeEnum, Swipe, gender, race, incone, StudentCreate, StudentPublic, StudentUpdate, Marker,OpportunitiesPublic, StudentRenty, Swipe
 load_dotenv()
 
