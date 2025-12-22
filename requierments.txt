@@ -1,5 +1,6 @@
 Flask
 gunicorn
+uvicorn
 flask-cors
 pandas
 numpy
