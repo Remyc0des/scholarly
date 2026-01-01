@@ -1,6 +1,6 @@
-Flask
+fastapi
 gunicorn
-uvicorn
+uvicorn[standard]
 flask-cors
 pandas
 numpy
