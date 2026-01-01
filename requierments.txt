@@ -1,5 +1,6 @@
-Flask
+fastapi
 gunicorn
+uvicorn[standard]
 flask-cors
 pandas
 numpy
@@ -10,3 +11,6 @@ Flask-SQLAlchemy
 fastapi
 httpx
 requests
+sqlmodel
+pydantic
+pydantic[email]
