@@ -204,7 +204,7 @@ def get_opportunity(oppertunity_id:int):
 def list_oppertunities():
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM opportunities')
+    cursor.execute('SELECT o.*, ARRAY_AGG(m.name) AS tags FROM opportunities o LEFT JOIN opportunity_tags ot ON o.opportunity_id = ot.opportunity_id LEFT JOIN markers m on ot.interest_id = m.marker_id GROUP BY o.opportunity_id')
     oppertunities = cursor.fetchall()
     cursor.close()
     conn.close()
